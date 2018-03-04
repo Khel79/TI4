@@ -28,6 +28,7 @@ public class Hexagon {
         this.corners = new Point[6];
 
         calculateDistances();
+        calculateCenter();
         calculateCorners();
     }
 
@@ -113,9 +114,15 @@ public class Hexagon {
         }
     }
 
+    private void calculateCenter() {
+        int x = center.x * horizontalDistance * 2;
+        int y = center.y * verticalDistance * 2;
+        center.setLocation(x, y);
+    }
+
     @Override
     public String toString() {
-        return String.format("Hexagon at coords: (%2d, %2d, %2d) with center coords: (%2d, %2d)", cubeX, cubeY, cubeZ, center.x, center.x);
+        return String.format("Hexagon at coords: (%2d, %2d, %2d) with center coords: (%2d, %2d)", cubeX, cubeY, cubeZ, center.x, center.y);
     }
 
     public Point getCenter() {

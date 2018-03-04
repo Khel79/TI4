@@ -40,16 +40,17 @@ public class GameBoard {
 
     private void generateCoordinateY(int x) {
         for (int y = 0; y < numberOfRings + 1; y++) {
-            if (Math.abs(x) + y != 0 && x + y < numberOfRings + 1) {
+            if (Math.abs(x) + y != 0 && x + y < numberOfRings + 1 && tiles.get((x + "," + y)) == null) {
                 tiles.put((x + "," + y), new Hexagon(x, y, -(x + y), radius, isFlatTopped, new Point(x, y)));
             }
         }
         for (int y = 0; y < numberOfRings + 1; y++) {
-            if (Math.abs(x) + y != 0 && Math.abs(x - y) < numberOfRings + 1) {
+            if (Math.abs(x) + y != 0 && Math.abs(x - y) < numberOfRings + 1 && tiles.get((x + "," + -y)) == null) {
                 tiles.put((x + "," + -y), new Hexagon(x, -y, -(x - y), radius, isFlatTopped, new Point(x, -y)));
             }
         }
     }
+
     public void printGameBoard() {
         for (Hexagon hexagon : tiles.values()) {
             System.out.println(hexagon.toString());
