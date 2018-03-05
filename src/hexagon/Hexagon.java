@@ -12,7 +12,7 @@ public class Hexagon {
     private boolean isFlatTopped;
     private int width, height;
     private int horizontalDistance, verticalDistance;
-    private final long halfSquareRootOfThree = Math.round(sqrt(3) / 2);
+    private final double halfSquareRootOfThree = sqrt(3) / 2;
     private Point center;
     private Point[] corners;
 
@@ -33,17 +33,17 @@ public class Hexagon {
     }
 
     private void calculateDistances() {
-        innerRadius = (int) (halfSquareRootOfThree * outerRadius);
+        innerRadius = (int) Math.round(halfSquareRootOfThree * outerRadius);
         if (isFlatTopped) {
             width = outerRadius * 2;
             height = innerRadius * 2;
-            horizontalDistance = Math.round(width * 3 / 4);
+            horizontalDistance = outerRadius;
             verticalDistance = innerRadius;
         } else {
-            height = outerRadius * 2;
             width = innerRadius * 2;
+            height = outerRadius * 2;
             horizontalDistance = innerRadius;
-            verticalDistance = Math.round(height * 3 / 4);
+            verticalDistance = outerRadius;
         }
     }
 
@@ -115,8 +115,16 @@ public class Hexagon {
     }
 
     private void calculateCenter() {
-        int x = center.x * horizontalDistance * 2;
-        int y = center.y * verticalDistance * 2;
+        int x = center.x * (horizontalDistance + horizontalDistance / 2);
+        if (center.x == 0) {
+            verticalDistance += verticalDistance;
+        }
+
+        if (center.y == 0) {
+            center.setLocation(center.x, center.x);
+        }
+
+        int y = center.y * verticalDistance;
         center.setLocation(x, y);
     }
 
@@ -165,7 +173,7 @@ public class Hexagon {
         int[] cubeCoordinates = new int[3];
         cubeCoordinates[0] = cubeX;
         cubeCoordinates[1] = cubeY;
-        cubeCoordinates[1] = cubeZ;
+        cubeCoordinates[2] = cubeZ;
         return cubeCoordinates;
     }
 
